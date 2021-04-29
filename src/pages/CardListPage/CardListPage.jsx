@@ -10,11 +10,9 @@ import { ANIMATION, HEADER_TEXT, PAGE_PATH } from "../../constants";
 
 const cx = classNames.bind(styles);
 
-// TODO : CardNumberList -> CardNumber 로 형식 바꾸기
-// 목업용 더미 데이터
 const cardMockUps = [
   {
-    cardName: "포코카드",
+    cardCompany: "포코카드",
     backgroundColor: "#547CE4",
     cardNumberList: [
       [0, 0, 0, 0],
@@ -27,7 +25,7 @@ const cardMockUps = [
     cardNickName: "엄카",
   },
   {
-    cardName: "로이드 카드",
+    cardCompany: "로이드 카드",
     backgroundColor: "red",
     cardNumberList: [
       [0, 0, 0, 0],

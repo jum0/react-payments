@@ -6,20 +6,24 @@ import CardListPage from "./pages/CardListPage/CardListPage";
 import AddCardPage from "./pages/AddCardPage/AddCardPage";
 import AddCardCompletePage from "./pages/AddCardCompletePage/AddCardCompletePage";
 
+// TODO : Card Input diable 시키기
 function App() {
   const [pageInputState, setInputState] = useState({
-    cardTypes: [],
-    cardNumber: { firstCardNumber: "", secondCardNumber: "", thirdCardNumber: "", fourthCardNumber: "" },
+    cardCompany: "",
+    cardNumber: {
+      firstCardNumber: "",
+      secondCardNumber: "",
+      thirdCardNumber: "",
+      fourthCardNumber: "",
+    },
     cardOwner: "",
     cardExpiration: "",
     cardNickName: "",
     cardCVC: "",
     cardPassword: [],
-    selectedCardType: "",
   });
 
-  const onCardInputChange = useCallback((stateKey, stateValue) => {
-    console.log("app", stateKey, stateValue);
+  const setCardInputState = (stateKey, stateValue) => {
     if (!(stateKey in pageInputState)) {
       return;
     }
@@ -28,7 +32,7 @@ function App() {
       ...state,
       [stateKey]: stateValue,
     }));
-  }, []);
+  };
 
   return (
     <div className="App">
@@ -39,14 +43,13 @@ function App() {
           exact
           component={() => (
             <AddCardPage
-              selectedCardType={pageInputState.selectedCardType}
-              cardTypes={pageInputState.cardTypes}
+              cardCompany={pageInputState.cardCompany}
               cardNumber={pageInputState.cardNumber}
               cardOwner={pageInputState.cardOwner}
               cardExpiration={pageInputState.cardExpiration}
               cardCVC={pageInputState.cardCVC}
               cardPassword={pageInputState.cardPassword}
-              onCardInputChange={onCardInputChange}
+              setCardInputState={setCardInputState}
             />
           )}
         />
@@ -55,7 +58,7 @@ function App() {
           exact
           component={() => (
             <AddCardCompletePage
-              selectedCardType={pageInputState.selectedCardType}
+              cardCompany={pageInputState.cardCompany}
               cardNickName={pageInputState.cardNickName}
             />
           )}

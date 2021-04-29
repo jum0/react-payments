@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./AddCardPage.module.scss";
+import { getCardColor, isCardCompany } from '../../utils/cardCompany';
 
 import { PAGE_PATH, HEADER_TEXT, BUTTON_TEXT } from "../../constants";
 
 import CardInputContainer from "../../containers/CardInputContainer/CardInputContainer";
-import CardTypeContainer from "../../containers/CardTypeContainer/CardTypeContainer";
+import CardCompanyContainer from "../../containers/CardCompanyContainer/CardCompanyContainer";
 
 import NavigationButton from "../../components/NavigationButton/NavigationButton";
 import Card from "../../components/Card/Card";
@@ -15,14 +16,13 @@ import Button from "../../components/Button/Button";
 const cx = classNames.bind(styles);
 
 const AddCardPage = ({
-  selectedCardType,
-  cardTypes,
+  cardCompany,
   cardNumber,
   cardOwner,
   cardExpiration,
   cardCVC,
   cardPassword,
-  onCardInputChange,
+  setCardInputState,
 }) => {
   // slider test
   const [pageState, setPageState] = useState({
@@ -31,7 +31,7 @@ const AddCardPage = ({
     sliderAnimation: "move-down",
   });
 
-  const toggleCardTypeContainer = ({ isBottomSliderToggled, backDropAnimation, sliderAnimation }) => {
+  const toggleCardCompanyContainer = ({ isBottomSliderToggled, backDropAnimation, sliderAnimation }) => {
     setPageState((state) => ({
       ...state,
       isBottomSliderToggled,
@@ -40,28 +40,37 @@ const AddCardPage = ({
     }));
   };
 
-  const showCardTypeContainer = () => {
-    toggleCardTypeContainer({
+  const showCardCompanyContainer = () => {
+    toggleCardCompanyContainer({
       isBottomSliderToggled: true,
       backDropAnimation: "fade-in",
       sliderAnimation: "move-up",
     });
   };
 
-  const hideCardTypeContainer = () => {
-    toggleCardTypeContainer({
+  const hideCardCompanyContainer = () => {
+    toggleCardCompanyContainer({
       isBottomSliderToggled: true,
       backDropAnimation: "fade-out",
       sliderAnimation: "move-down",
     });
     setTimeout(() => {
-      toggleCardTypeContainer({
+      toggleCardCompanyContainer({
         isBottomSliderToggled: false,
         backDropAnimation: "fade-out",
         sliderAnimation: "move-down",
       });
     }, 350);
   };
+
+  const onCardCompanySelect = (cardCompany) => {
+    console.log('cardCompany', cardCompany)
+    if (typeof cardCompany !== 'string' || !isCardCompany(cardCompany)) {
+      return;
+    }
+
+    setCardInputState("cardCompany", cardCompany)
+  }
 
   return (
     <div className={cx("add-card-page")}>
@@ -70,29 +79,29 @@ const AddCardPage = ({
           <NavigationButton buttonText={HEADER_TEXT.ADD_CARD} />
         </Link>
       </header>
-      {/* onClick for slider test */}
       <main className={cx("add-card-page__main")}>
-        <Card className={cx("add-card-page__card")} />
+        <Card cardCompany={cardCompany} backgroundColor={getCardColor(cardCompany)} className={cx("add-card-page__card")} />
         <CardInputContainer
+          cardCompany={cardCompany}
           cardOwner={cardOwner}
           cardExpiration={cardExpiration}
           cardCVC={cardCVC}
           cardPassword={cardPassword}
-          onCardInputChange={onCardInputChange}
+          setCardInputState={setCardInputState}
+          showCardCompanyContainer={showCardCompanyContainer}
         />
       </main>
       {pageState.isBottomSliderToggled && (
-        <CardTypeContainer
-          cardTypes={cardTypes}
-          hideCardTypeContainer={hideCardTypeContainer}
+        <CardCompanyContainer
+          hideCardCompanyContainer={hideCardCompanyContainer}
           backDropAnimationClass={pageState.backDropAnimation}
           bottomSliderAnimationClass={pageState.sliderAnimation}
+          onCardCompanySelect={onCardCompanySelect}
+          
         />
       )}
       <div className={cx("add-card-page__bottom")}>
-        <Link to={PAGE_PATH.COMPLETE}>
           <Button>{BUTTON_TEXT.NEXT}</Button>
-        </Link>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const initialCardNumber = { firstCardNumber: "", secondCardNumber: "", thirdCard
 
 // TODO : 배경색에 따라 글자 색이 바뀌도록 만들기
 const Card = ({
-  cardType = "",
+  cardCompany = "",
   backgroundColor = "#D2D2D2",
   cardNumber = initialCardNumber,
   cardOwner = "",
@@ -20,7 +20,7 @@ const Card = ({
   return (
     <div className={cx("card-wrapper", className)}>
       <div className={cx("card")} style={{ backgroundColor }}>
-        <span className={cx("card__type")}>{cardType}</span>
+        <span className={cx("card__type")}>{cardCompany}</span>
         <div className={cx("card__chip")}></div>
         <div className={cx("card__number")}>
           <input

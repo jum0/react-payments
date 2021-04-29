@@ -11,16 +11,17 @@ import InputBoxList from "../../components/InputBoxList/InputBoxList";
 
 const cx = classNames.bind(styles);
 
-const CardInputContainer = ({ cardOwner, cardExpiration, cardCVC, cardPassword, onCardInputChange }) => {
+const CardInputContainer = ({ cardCompany, cardOwner, cardExpiration, cardCVC, cardPassword, setCardInputState, showCardCompanyContainer }) => {
   return (
     <form className={cx("card-input-container")}>
-      {/* TODO: placeholder 추가 */}
       <CardNumberInput
         inputWidth="100%"
         key={INPUT_LABEL_TEXT.CARD_NUMBER}
         className={cx("card-input-container__number")}
+        cardCompany={cardCompany}
         labelText={INPUT_LABEL_TEXT.CARD_NUMBER}
-        onCardInputChange={onCardInputChange}
+        setCardInputState={setCardInputState}
+        showCardCompanyContainer={showCardCompanyContainer}
       />
       <Input
         inputWidth="137px"
@@ -28,7 +29,7 @@ const CardInputContainer = ({ cardOwner, cardExpiration, cardCVC, cardPassword, 
         key={INPUT_LABEL_TEXT.CARD_EXPIRATION}
         className={cx("card-input-container__expiration")}
         labelText={INPUT_LABEL_TEXT.CARD_EXPIRATION}
-        // value={cardExpiration}
+        setCardInputState={setCardInputState}
       />
       <TextLimitInput
         inputWidth="100%"
@@ -36,20 +37,20 @@ const CardInputContainer = ({ cardOwner, cardExpiration, cardCVC, cardPassword, 
         lengthLimit={CARD_INPUT.OWNER_NAME_LENGTH_LIMIT}
         className={cx("card-input-container__owner")}
         labelText={INPUT_LABEL_TEXT.CARD_OWNER}
-        // value={cardOwner}
+        setCardInputState={setCardInputState}
       />
       <GuideInput
         inputWidth="84px"
         className={cx("card-input-container__cvc")}
         labelText={INPUT_LABEL_TEXT.CARD_CVC}
-        // value={cardCVC}
+        setCardInputState={setCardInputState}
       />
       <InputBoxList
         numbers={[1, 2]}
         dotCount={2}
         className={cx("card-input-container__password")}
         labelText={INPUT_LABEL_TEXT.CARD_PASSWORD}
-        // value={cardPassword}
+        setCardInputState={setCardInputState}
       />
     </form>
   );

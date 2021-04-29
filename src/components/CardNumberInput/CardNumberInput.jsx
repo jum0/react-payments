@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./CardNumberInput.module.scss";
+import { getCardCompany, isCardCompany } from "../../utils/cardCompany"
 
 const cx = classNames.bind(styles);
 
-const CardNumberInput = ({ labelText, className, onCardInputChange }) => {
+const CardNumberInput = ({ labelText, className, setCardInputState, showCardCompanyContainer, cardCompany}) => {
   const [cardNumberInput, setCardNumberInput] = useState({
     firstCardNumberInput: "",
     secondCardNumberInput: "",
@@ -27,11 +28,20 @@ const CardNumberInput = ({ labelText, className, onCardInputChange }) => {
 
   useEffect(() => {
     if (cardNumberInput.firstCardNumberInput.length === 4 && cardNumberInput.secondCardNumberInput.length === 4) {
-      // 카드 타입 결정
+      const newCardCompany = getCardCompany(Object.keys(cardNumberInput).map((key) => cardNumberInput[key]).join(" "))
+      
+      if (!newCardCompany) {
+        isCardCompany(cardCompany) || showCardCompanyContainer();
+      }
+      
+      // setCardInputState("cardCompany", newCardCompany);
     }
+    
+    console.log(cardNumberInput)
 
     if (Object.keys(cardNumberInput).every((key) => cardNumberInput[key].length === 4)) {
-      onCardInputChange("cardNumber", {
+      console.log('update!')
+      setCardInputState("cardNumber", {
         firstCardNumber: cardNumberInput.firstCardNumberInput,
         secondCardNumber: cardNumberInput.secondCardNumberInput,
         thirdCardNumber: cardNumberInput.thirdCardNumberInput,
@@ -56,7 +66,7 @@ const CardNumberInput = ({ labelText, className, onCardInputChange }) => {
           onBlur={onCardNumberInputBlur}
           required
         />
-        <span className={cx("card-number-input__input-seperator")}></span>
+        <span className={cx("card-number-input__input-separator")}></span>
         <input
           name={"secondCardNumberInput"}
           type="text"
@@ -65,7 +75,7 @@ const CardNumberInput = ({ labelText, className, onCardInputChange }) => {
           onBlur={onCardNumberInputBlur}
           required
         />
-        <span className={cx("card-number-input__input-seperator")}></span>
+        <span className={cx("card-number-input__input-separator")}></span>
         <input
           name={"thirdCardNumberInput"}
           type="password"
@@ -74,7 +84,7 @@ const CardNumberInput = ({ labelText, className, onCardInputChange }) => {
           onBlur={onCardNumberInputBlur}
           required
         />
-        <span className={cx("card-number-input__input-seperator")}></span>
+        <span className={cx("card-number-input__input-separator")}></span>
         <input
           name={"fourthCardNumberInput"}
           type="password"
