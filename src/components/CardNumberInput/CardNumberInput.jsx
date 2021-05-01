@@ -4,7 +4,7 @@ import styles from "./CardNumberInput.module.scss";
 
 const cx = classNames.bind(styles);
 
-const CardNumberInput = ({ labelText, className, onCardNumberChange, onCardNumberInputUpdate}) => {
+const CardNumberInput = ({ labelText, className, onCardNumberChange, onCardNumberInputStateUpdate}) => {
   const [cardNumberInputState, setCardNumberInputState] = useState({
     firstCardNumberInput: "",
     secondCardNumberInput: "",
@@ -12,12 +12,11 @@ const CardNumberInput = ({ labelText, className, onCardNumberChange, onCardNumbe
     fourthCardNumberInput: "",
   });
 
-
   const onCardNumberInputChange = (event) => {
     onCardNumberChange(event, setCardNumberInputState);
   };
 
-  useEffect(() => onCardNumberInputUpdate(cardNumberInputState), [cardNumberInputState]);
+  useEffect(() => onCardNumberInputStateUpdate(cardNumberInputState), [cardNumberInputState]);
 
   return (
     <div className={`${cx("card-number-input")} ${className}`}>

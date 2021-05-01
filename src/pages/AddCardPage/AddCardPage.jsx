@@ -16,7 +16,6 @@ import Button from "../../components/Button/Button";
 const cx = classNames.bind(styles);
 
 // TODO: 카드 호버 애니메이션 껐다 킬수 있게 만들기
-// TODO: UX 적으로 카드 정보 입력 페이지에서 카드 클릭시 카드사 입력 토글이 켜지도록 할지 결정하기
 
 const AddCardPage = ({
   cardCompany,
@@ -75,7 +74,7 @@ const AddCardPage = ({
         </Link>
       </header>
       <main className={cx("add-card-page__main")}>
-        <Card cardNumber={cardNumber} cardCompany={cardCompany} backgroundColor={getCardColor(cardCompany)} className={cx("add-card-page__card")} />
+        <Card cardNumber={cardNumber} cardCompany={cardCompany} cardExpiration={cardExpiration} backgroundColor={getCardColor(cardCompany)} className={cx("add-card-page__card")} />
         <CardInputContainer
           cardCompany={cardCompany}
           cardOwner={cardOwner}

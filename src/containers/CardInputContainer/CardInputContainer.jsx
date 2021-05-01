@@ -3,7 +3,7 @@ import styles from "./CardInputContainer.module.scss";
 
 import { INPUT_LABEL_TEXT, CARD_INPUT, STATE_KEY } from "../../constants";
 
-import Input from "../../components/Input/Input";
+import CardExpirationInput from "../../components/CardExpirationInput/CardExpirationInput";
 import CardNumberInput from "../../components/CardNumberInput/CardNumberInput";
 import GuideInput from "../../components/Input/GuideInput/GuideInput";
 import TextLimitInput from "../../components/Input/TextLimitInput/TextLimitInput";
@@ -29,7 +29,28 @@ const CardInputContainer = ({ cardCompany, cardExpiration, cardOwner, cardCVC, c
     setCardState(STATE_KEY.CARD_COMPANY, cardCompany)
   }
 
-  const onCardNumberInputUpdate = (cardNumberInputState) => {
+  const setCardExpirationState = (cardExpiration) => {
+    if (cardExpiration.expirationMonth.match(/0[1-9]|1[0-2]/) && cardExpiration.expirationYear.match(/2[0-9]/)) {
+      return;
+    }
+
+    setCardState(STATE_KEY.CARD_EXPIRATION, cardExpiration)
+  }
+  
+  const onCardNumberChange = (event, setCardNumberInputState) => {
+    const { value, name } = event.target;
+    if (Number.isNaN(Number(value))) {
+      event.target.value = event.target.value.slice(0, -1);
+      return;
+    }
+
+    setCardNumberInputState((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  }
+
+  const onCardNumberInputStateUpdate = (cardNumberInputState) => {
     if (Object.keys(cardNumberInputState).every((key) => cardNumberInputState[key].length === 4)) {
       const newCardCompany = getCardCompany(Object.keys(cardNumberInputState).map((key) => cardNumberInputState[key]).join(" "))      
       showCardCompanySelectContainer();
@@ -47,17 +68,24 @@ const CardInputContainer = ({ cardCompany, cardExpiration, cardOwner, cardCVC, c
     }
   }
 
-  const onCardNumberChange = (event, setCardNumberInput) => {
+  const onCardExpirationChange = (event, setCardExpirationInputState) => {
     const { value, name } = event.target;
     if (Number.isNaN(Number(value))) {
       event.target.value = event.target.value.slice(0, -1);
       return;
     }
 
-    setCardNumberInput((state) => ({
+    setCardExpirationInputState(state => ({
       ...state,
-      [name]: value,
-    }));
+      [name]: value
+    }))
+  }
+
+  const onCardExpirationInputStateUpdate = (cardExpirationInputState) => {
+    setCardExpirationState({
+      [STATE_KEY.EXPIRATION_MONTH]: cardExpirationInputState.expirationMonthInput,
+      [STATE_KEY.EXPIRATION_YEAR]: cardExpirationInputState.expirationYearInput,
+    });
   }
   
   return (
@@ -66,19 +94,19 @@ const CardInputContainer = ({ cardCompany, cardExpiration, cardOwner, cardCVC, c
         inputWidth="100%"
         key={INPUT_LABEL_TEXT.CARD_NUMBER}
         className={cx("card-input-container__number")}
-        cardCompany={cardCompany}
         labelText={INPUT_LABEL_TEXT.CARD_NUMBER}
         onCardNumberChange={onCardNumberChange}
-        onCardNumberInputUpdate={onCardNumberInputUpdate}
+        onCardNumberInputStateUpdate={onCardNumberInputStateUpdate}
       />
-      <Input
+      <CardExpirationInput
         inputWidth="137px"
-        placeholder={CARD_INPUT.EXPIRATION_PLACEHOLDER}
+        monthPlaceholder={CARD_INPUT.EXPIRATION_MONTH_PLACEHOLDER}
+        yearPlaceholder={CARD_INPUT.EXPIRATION_YEAR_PLACEHOLDER}
         key={INPUT_LABEL_TEXT.CARD_EXPIRATION}
         className={cx("card-input-container__expiration")}
-        cardExpiration={cardExpiration}
         labelText={INPUT_LABEL_TEXT.CARD_EXPIRATION}
-        setCardState={setCardState}
+        onCardExpirationChange={onCardExpirationChange}
+        onCardExpirationInputStateUpdate={onCardExpirationInputStateUpdate}
       />
       <TextLimitInput
         inputWidth="100%"

@@ -16,7 +16,10 @@ function App() {
       [STATE_KEY.THIRD_CARD_NUMBER]: "",
       [STATE_KEY.FOURTH_CARD_NUMBER]: "",
     },
-    [STATE_KEY.CARD_EXPIRATION]: "",
+    [STATE_KEY.CARD_EXPIRATION]: {
+      [STATE_KEY.EXPIRATION_MONTH]: "",
+      [STATE_KEY.EXPIRATION_YEAR]: "",
+    },
     [STATE_KEY.CARD_OWNER]: "",
     [STATE_KEY.CARD_NICK_NAME]: "",
     [STATE_KEY.CARD_CVC]: "",
