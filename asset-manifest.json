@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/react-payments/static/css/main.998b6def.chunk.css",
+    "main.js": "/react-payments/static/js/main.bf43f96c.chunk.js",
+    "main.js.map": "/react-payments/static/js/main.bf43f96c.chunk.js.map",
+    "runtime-main.js": "/react-payments/static/js/runtime-main.80a2318f.js",
+    "runtime-main.js.map": "/react-payments/static/js/runtime-main.80a2318f.js.map",
+    "static/js/2.104497bf.chunk.js": "/react-payments/static/js/2.104497bf.chunk.js",
+    "static/js/2.104497bf.chunk.js.map": "/react-payments/static/js/2.104497bf.chunk.js.map",
+    "static/js/3.f77c6616.chunk.js": "/react-payments/static/js/3.f77c6616.chunk.js",
+    "static/js/3.f77c6616.chunk.js.map": "/react-payments/static/js/3.f77c6616.chunk.js.map",
+    "index.html": "/react-payments/index.html",
+    "static/css/main.998b6def.chunk.css.map": "/react-payments/static/css/main.998b6def.chunk.css.map",
+    "static/js/2.104497bf.chunk.js.LICENSE.txt": "/react-payments/static/js/2.104497bf.chunk.js.LICENSE.txt",
+    "static/media/card-cvc.93ba88e4.png": "/react-payments/static/media/card-cvc.93ba88e4.png",
+    "static/media/left-arrow.4a72a8bc.svg": "/react-payments/static/media/left-arrow.4a72a8bc.svg",
+    "static/media/question-mark.7e7d3191.svg": "/react-payments/static/media/question-mark.7e7d3191.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.80a2318f.js",
+    "static/js/2.104497bf.chunk.js",
+    "static/css/main.998b6def.chunk.css",
+    "static/js/main.bf43f96c.chunk.js"
+  ]
+}
